@@ -1,0 +1,22 @@
+[functions]
+  directory = "netlify/functions"
+
+[dev]
+  command = "vite"
+  # Netlify's proxy port (what you open in the browser)
+  port = 8888            # or remove this line to use default 8888
+  # Your framework server (Vite) port
+  targetPort = 5173
+  framework = "vite"
+
+# Optional: shorter API path
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
