@@ -49,9 +49,16 @@ export default function Admin() {
   useEffect(() => () => toastTimer.current && clearTimeout(toastTimer.current), []);
 
   useEffect(() => {
+    // FIX: Determine the correct URL for Identity service
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    // Use the live site URL from env if local, otherwise use the current origin
+    const siteUrl = isLocal ? import.meta.env.VITE_SITE_URL : window.location.origin;
+
+    // Initialize with the correct API URL
     netlifyIdentity.init({
-      APIUrl: `${window.location.origin}/.netlify/identity`,
+      APIUrl: `${siteUrl}/.netlify/identity`,
     });
+
     const current = netlifyIdentity.currentUser();
     if (current) setUser(current);
 
